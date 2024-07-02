@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  cadastrei-db:
+    container_name: cadastrei_container
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: asd
+      POSTGRES_PASSWORD: asd
+      POSTGRES_DB: cadastrei-db
+    ports:
+      - "5432:5432"
