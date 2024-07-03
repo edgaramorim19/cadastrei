@@ -1,44 +1,26 @@
 package com.br.cadastrei.primeiro_teste;
 
+import org.antlr.v4.runtime.misc.Pair;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/testes")
+@RequestMapping("/usuarios")
 public class Controller {
 
-    private final List<Integer> numeros = new ArrayList<>();
-
-    @GetMapping()
-    public String hello(){
-        return "Hello World";
-    }
-
+    private final Map<Pair<String, String>, Usuario> usuarios = new HashMap<>();
 
     @PostMapping
-    public void adicionaNumero(){
-        numeros.add(1);
+    public Usuario cadastraUsuario(@RequestBody Usuario usuario) {
+        Pair<String, String> emailSenha = new Pair<>(usuario.email(), usuario.senha());
+        usuarios.put(emailSenha, usuario);
+        return usuario;
     }
 
-    @GetMapping("/lista")
-    public List<Integer> retornaNumeros(){        
-        return numeros;
-    }
-
-    @DeleteMapping()
-    public void removeNumero(){
-        
-        if(numeros.isEmpty()) {
-            
-        } else {
-            numeros.remove(numeros.indexOf(numeros.get(numeros.size() -1)));
-        }
+    @GetMapping
+    public Map<Pair<String, String>, Usuario> listaUsuarios() {
+        return usuarios;
     }
 }
